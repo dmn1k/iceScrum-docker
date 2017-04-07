@@ -37,5 +37,23 @@ mkdir -p /root/.icescrum
 config_file="/root/.icescrum/config.groovy"
 if [ ! -f "$config_file" ]; then
     mkdir -p /root/hsqldb
-    echo "dataSource.url = 'jdbc:hsqldb:file:/root/hsqldb/prodDba;shutdown=true'" >> "$config_file"
+    echo "dataSource.url = 'jdbc:hsqldb:file:/root/hsqldb/prodDba;shutdown=true'\n" >> "$config_file"
+fi
+
+if [ ! -z "$ICESCRUM_SMTP_HOST" ]; then
+    echo "grails.mail.host = '$ICESCRUM_SMTP_HOST'\n" >> "$config_file"
+fi
+
+if [ ! -z "$ICESCRUM_SMTP_PORT" ]; then
+    echo "grails.mail.port = $ICESCRUM_SMTP_PORT\n" >> "$config_file"
+fi
+
+if [ ! -z "$ICESCRUM_SMTP_UNAME" ]; then
+    echo "grails.mail.username = '$ICESCRUM_SMTP_UNAME'\n" >> "$config_file"
+else
+    echo "grails.mail.props = [\"mail.smtp.auth\":\"false\"]\n" >> "$config_file"
+fi
+
+if [ ! -z "$ICESCRUM_SMTP_PW" ]; then
+    echo "grails.mail.password = '$ICESCRUM_SMTP_PW'\n" >> "$config_file"
 fi
